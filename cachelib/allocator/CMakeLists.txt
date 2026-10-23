@@ -73,15 +73,8 @@ else()
   target_compile_definitions(cachelib_allocator PRIVATE SKIP_SIZE_VERIFY)
 endif()
 
-find_package(MLPACK REQUIRED)
-include_directories(${MLPACK_INCLUDE_DIRS})
-target_link_libraries(cachelib_allocator PUBLIC ${MLPACK_LIBRARIES})
 SET(GCC_COVERAGE_COMPILE_FLAGS "-fopenmp")
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${GCC_COVERAGE_COMPILE_FLAGS}")
-
-find_package (Eigen3 3.3 REQUIRED NO_MODULE)
-include_directories(${EIGEN_INCLUDE_DIR})
-target_link_libraries(cachelib_allocator PUBLIC Eigen3::Eigen)
 
 find_package(Boost REQUIRED system serialization)
 include_directories(${Boost_INCLUDE_DIR})
