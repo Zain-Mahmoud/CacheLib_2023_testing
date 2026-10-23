@@ -367,7 +367,7 @@ public:
             LGBM_BoosterSaveModel(booster, 0, 0, C_API_FEATURE_IMPORTANCE_SPLIT, "model.txt");
         }
         */
-        info(1);
+        info(debug_mode >= 3);
 #ifdef DEBUG_ML
         if (input_data.labels.size() >= 130000) {
             cout << "label distribution: " << endl;
@@ -380,7 +380,7 @@ public:
         }
 #endif
         LGBM_DatasetFree(trainData);
-        XLOG_EVERY_MS(INFO, 1000) << "<train size=" <<  n_in_batch
+        if (debug_mode >= 2) XLOG_EVERY_MS(INFO, 1000) << "<train size=" <<  n_in_batch
             << "> number of 1s in feats: " << avg_label / n_in_batch;
         if (debug_mode >= 2) {
             cout << "train time: " << std::chrono::duration_cast<std::chrono::microseconds>(
@@ -842,7 +842,7 @@ class EvictionController {
                 }
                     to_reinsert = true;
                     reinserted_by_reuse ++;
-                    XLOG_EVERY_MS(INFO, 1000) << "not sampled candidate cnt: " << reinserted_by_reuse;
+                    if (debug_mode >= 2) XLOG_EVERY_MS(INFO, 1000) << "not sampled candidate cnt: " << reinserted_by_reuse;
                 }
 
                 if(!to_reinsert) {
@@ -861,7 +861,7 @@ class EvictionController {
                         } else {
                             items_for_eviction[eviction_cnt++] = items_for_prediction[i];
                         }
-                        XLOG_EVERY_MS(INFO, 1000) << "reach max reinsertion: " << cid << ' ' << n_evict_by_max;
+                        if (debug_mode >= 2) XLOG_EVERY_MS(INFO, 1000) << "reach max reinsertion: " << cid << ' ' << n_evict_by_max;
                     } else {
                         items_for_eviction[eviction_cnt++] = items_for_prediction[i];
                     }
@@ -878,7 +878,7 @@ class EvictionController {
             adjust_threshold();
             evict_queue.enqueue_bulk(items_for_eviction, eviction_cnt);
             evict_queue_size += eviction_cnt;
-            XLOG_EVERY_MS(INFO, 1000) << "evict " << eviction_cnt << " out of " << scores.size();
+            if (debug_mode >= 2) XLOG_EVERY_MS(INFO, 1000) << "evict " << eviction_cnt << " out of " << scores.size();
 
             delete[] items_for_eviction;
             delete[] items_for_prediction;
@@ -966,7 +966,7 @@ class EvictionController {
         int cnt = 0;
         auto it = rank2node.rbegin();
         for (; cnt < rank2node.size() / (1+rpe_target); cnt ++, it ++);
-        XLOG_EVERY_MS(INFO, 1000) << threshold << ' ' << it->first - current_timestamp_global / time_unit;
+        if (debug_mode >= 2) XLOG_EVERY_MS(INFO, 1000) << threshold << ' ' << it->first - current_timestamp_global / time_unit;
         threshold = it->first - current_timestamp_global / time_unit;
 */
     }
@@ -1023,7 +1023,7 @@ class EvictionController {
     }
 
     void adjust_threshold_inactive(float t) {
-        if (cid == 1)
+        if (cid == 1 && debug_mode >= 2)
             XLOG_EVERY_MS(INFO, 1000) << "threshold of inactive: " 
                 << threshold_of_inactive << ' ' << s_cnt / (s_cnt + l_cnt);
         if (t < threshold_of_inactive) {

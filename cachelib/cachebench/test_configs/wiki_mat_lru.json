@@ -16,7 +16,7 @@
       "numOps": 200000000,
       "numThreads": 1,
       "populateItem": true,
-      "traceFileName": "/nfs/wiki2019.tr.ant",
+      "traceFileName": "/home/ubuntu/zainmahmoud/traces/wiki2019_200m.tr.ant",
       "replayGeneratorConfig":
       {
           "ampFactor": 1

@@ -1330,7 +1330,7 @@ void CacheAllocator<CacheTrait>::evictByEC(EvictionController<CacheTrait>* ec, I
     n_eviction_queue ++;
     ec->evict_queue_size -= 1;
   } else {
-    XLOG_EVERY_MS(INFO, 1000) << "eq empty: " << ec->candidate_queue_size << ' ' << ec->evict_queue_size
+    if (ec->debug_mode >= 2) XLOG_EVERY_MS(INFO, 1000) << "eq empty: " << ec->candidate_queue_size << ' ' << ec->evict_queue_size
      << " token: " << enqueue_token[ec->cid];
   }
   if (ec->candidate_queue_size >= ec->prediction_batch_size) {
