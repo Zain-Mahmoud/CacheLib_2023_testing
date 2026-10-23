@@ -1,0 +1,25 @@
+{
+    "cache_config": {
+      "allocator": "LRU",
+      "cacheSizeMB": 4096,
+      "useEvictionControl": true,
+      "MLConfig": "use_eviction_control,1,async_mode,1,num_iterations,16,num_leaves,16,rpe_target,1,window_cnt,32,batch_size_factor,1,window_size_factor,1,debug_mode,1",
+      "poolRebalanceIntervalSec" : 0,
+      "lruRefreshSec": 0,
+      "lruRefreshRatio": 0,
+      "nvmCacheSizeMB": 0
+    },
+    "test_config":
+    {
+      "enableLookaside": true,
+      "generator": "replay",
+      "numOps": 200000000,
+      "numThreads": 1,
+      "populateItem": true,
+      "traceFileName": "/nfs/wiki2019.tr.ant",
+      "replayGeneratorConfig":
+      {
+          "ampFactor": 1
+      }
+    }
+}

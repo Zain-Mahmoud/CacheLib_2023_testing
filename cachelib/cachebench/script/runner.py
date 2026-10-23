@@ -31,7 +31,7 @@ elif env == "cloudlab2":
 ts = int(time.time())
 debug_nfs = 0
 upload_mode = False
-should_upload = True
+should_upload = False
 sharding_mode = False
 multi_mode = -1
 n_cores = 16
